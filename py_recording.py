@@ -52,7 +52,7 @@ def wav_maker(RECORD_SECONDS = 10,WAVE_OUTPUT_FILENAME = "sample.wav",
         frames.append(data)
     
     
-    print ("finished recording")
+    print ("finished recording and converting the format")
     
     #--------------録音終了---------------
     
@@ -71,6 +71,8 @@ def wav_maker(RECORD_SECONDS = 10,WAVE_OUTPUT_FILENAME = "sample.wav",
     sound_1.export(WAVE_OUTPUT_FILENAME, format=WAVE_OUTPUT_FILENAME.split('.')[-1])
     if WAVE_OUTPUT_FILENAME != "sample.wav":
         os.remove("sample.wav")
+        
+    print(f'saved as {WAVE_OUTPUT_FILENAME}')
 
 
 # In[4]:
@@ -78,7 +80,7 @@ def wav_maker(RECORD_SECONDS = 10,WAVE_OUTPUT_FILENAME = "sample.wav",
 
 sg.theme()
 layout = [[sg.Text('フォルダー', size=(10, 1)), sg.Input(key='inputFilePath'),sg.FolderBrowse('保存先を選択')],
-          [sg.Text('保存ファイル名'),sg.Input('sample',key='fname'),sg.Combo(('.mp3','.wav'),default_value='.mp3',key='format')],
+          [sg.Text('保存ファイル名'),sg.Input(datetime.datetime.now().strftime('%Y%m%d%H%M%S')+'_sample',key='fname'),sg.Combo(('.mp3','.wav'),default_value='.mp3',key='format')],
           [sg.Spin([i for i in range(0,39)],size=(5, 1),key='h'),sg.Text('時間'),sg.Spin([i for i in range(0,60)],size=(5, 1),key='m'),sg.Text('分'),sg.Spin([i for i in range(0,60)],size=(5, 1),key='s'),sg.Text('秒'),sg.Button('録音開始', key='start'),sg.Button('録音中止', key='cancel')],
           [sg.Text('経過秒 / 総録音秒：'),sg.Text('0', key='keika_second',size=(5, 1)),sg.Text('秒 / '),sg.Text('0', key='all_second',size=(5, 1)),sg.Text('秒')],
           [sg.Output(size=(80, 10))]]
